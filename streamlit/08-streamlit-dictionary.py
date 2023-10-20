@@ -16,25 +16,46 @@ def main():
     st.title("Dictionary API")
     
     word = st.text_input("Word")
+    if len(word) == 0:
+        st.warning("Enter a word")
+        return 0
     result = lookup(word)
     
-    st.subheader(f"{word} {result[0]['phonetics'][1]['text']}")
+    with st.expander("RAW JSON"):
+        st.write(result)
+        
+    if not isinstance(result, list):
+        st.error("The word does not exist")
+        return 0
+    
+    st.header(f"{word}")
 
     # st.write(result[0]['phonetics'][1]['text'])
     for phonetic in result[0]['phonetics']:
         if 'audio' in phonetic:
+            if 'text' in phonetic:
+                pronounciation = phonetic['text']
+                st.write(f"*{pronounciation}*")
+            
             mp3_file = phonetic['audio']
-                        
-#             contents = http.request('GET', mp3_file, host='api.dictionaryapi.dev')
-#             mp3_data = contents.data
+            if len(mp3_file) > 0:
+                contents = http.request('GET', mp3_file)
+                mp3_data = contents.data
 
-#             st.audio(mp3_data, format='audio/mpeg') # MIME TYPE
+                st.audio(mp3_data, format='audio/mpeg') # MIME TYPE
             
     
     for meaning in result[0]['meanings']:
-        st.write(f"**{meaning['partOfSpeech']}**")
+        st.subheader(f"{meaning['partOfSpeech']}")
         for definition in meaning['definitions']:
-            st.write("- " + definition['definition'])
+            st.write(f"- {definition['definition']}")
+            if len(definition['synonyms']) > 0:
+                st.write(f"-- Synonyms: {definition['synonyms']}")
+            if len(definition['antonyms']) > 0:
+                st.write(f"-- Antonyms: {definition['antonyms']}")
+            if 'example' in definition and len(definition['example']) > 0:
+                st.write(f"> *Example:* {definition['example']}")
+
     
 if __name__ == "__main__":
     main()
