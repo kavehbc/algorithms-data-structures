@@ -1,5 +1,5 @@
-import uvicorn
 from fastapi import FastAPI
+import uvicorn
 import pickle
 import pandas as pd
 
@@ -44,9 +44,9 @@ def iris_classification(petal_length: float,
                  'name': species_name[prediction]}
            }
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     uvicorn.run("09-iris:app",
                 host='127.0.0.1',
                 port=8000,
                 reload=True)
-    
