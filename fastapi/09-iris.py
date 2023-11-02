@@ -1,5 +1,6 @@
 from typing import Annotated, Union
 from fastapi import FastAPI, Path, Query
+import uvicorn
 import pickle
 import pandas as pd
 import base64
