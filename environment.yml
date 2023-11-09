@@ -16,6 +16,9 @@ dependencies:
   - tqdm
   - fastapi
   - uvicorn
+  - pytorch
+  - torchvision
+  - python-multipart
   - pip
   - pip:
       - streamlit
