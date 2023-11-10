@@ -3,26 +3,27 @@ import requests
 
 
 def main():
-    st.write("MNIST CNN Classifier")
+    st.title("MNIST CNN Classifier")
 
-    uploaded_file = st.file_uploader("Choose a file")
+    uploaded_file = st.file_uploader("Choose an image")
     
     btn_classify = st.button("Classify")
     
     if btn_classify and uploaded_file is not None:
-        st.write("Button is pressed")
         
-        image_binary = uploaded_file.read()
+        with st.spinner("Please wait..."):
         
-        image = {'file': image_binary}
-        url = f"http://127.0.0.1:8000/mnist"
-        
-        api = requests.post(url, files=image)
-        result = api.json()
-        
-        st.write(result)
+            image_binary = uploaded_file.read()
 
-        st.subheader(f"Classification: {result['prediction']}")
+            image = {'file': image_binary}
+            url = f"http://127.0.0.1:8000/mnist"
+
+            api = requests.post(url, files=image)
+            result = api.json()
+
+            st.write(result)
+
+            st.subheader(f"Classification: {result['classification']}")
     
     
 if __name__ == "__main__":

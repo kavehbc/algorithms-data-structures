@@ -70,7 +70,7 @@ async def mnist_classification(file: UploadFile):
 
     value = int(np.where(probabilities == probabilities.max())[0][0])
 
-    return {"prediction":value}
+    return {"classification": value}
 
 
 if __name__ == "__main__":
