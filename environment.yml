@@ -19,6 +19,8 @@ dependencies:
   - pytorch
   - torchvision
   - python-multipart
+  - pytables
+  - lxml
   - pip
   - pip:
       - streamlit
